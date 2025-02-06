@@ -38,8 +38,8 @@ The Docker Management Console is a command-line interface (CLI) tool designed to
 
 ## Requirements
 
-- **Nmap must be installed** on your system.
-  - Install Nmap if not installed:
+- **Docker must be installed** on your system.
+  - Install Docker if not installed:
     ```bash
     # Debian-based systems
     
@@ -63,12 +63,12 @@ Download the script:
 
     ```bash
 
-    git clone https://github.com/your-repository/docker-management-console.git
-    cd docker-management-console
+    git clone https://github.com/kurogane13/docker_interactive_management_console.git
+    cd docker_interactive_management_console
 
     # Make the script executable:
 
-    chmod +x docker_management.sh
+    chmod +x docker_console.sh
 
     # Run the script:
 
