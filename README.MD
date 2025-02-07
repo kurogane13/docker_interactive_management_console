@@ -26,6 +26,19 @@ The **Docker Management Console** is a command-line interface (CLI) tool designe
 
 ---
 
+## Sample directory with centos7 Dockerfile
+
+🟢 The project includes a sample Dockerfile to test out and work with:
+	
+- Build a centos7 containier
+- Configure centos 7 latest repos
+  - baseurl=https://vault.centos.org/7.9.2009/os/$basearch/
+  - updates=https://vault.centos.org/7.9.2009/updates/$basearch/
+  - extras=https://vault.centos.org/7.9.2009/extras/$basearch/
+- Installs dependencies in the system
+
+---
+
 ## Requirements
 
 - **Docker must be installed** on your system.
