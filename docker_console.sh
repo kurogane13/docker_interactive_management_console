@@ -416,7 +416,9 @@ main_program() {
     echo -e "${WHITE}22. Remove a DOCKER image${NC}"
     echo -e "${WHITE}23. FORCE Remove a DOCKER image${NC}"
     echo -e "${WHITE}24. Prune unused images & containers${NC}"
-    echo -e "${WHITE}25. Exit${NC}\n"
+    echo -e "${LIGHT_GREEN} === READ COMMANDS FROM THIS PROGRAM === ${nc}"
+    echo -e "${WHITE}25. Read and list all commands in this program${NC}"
+    echo -e "${WHITE}26. Exit${NC}\n"
 
 
     read -p "Select an option: " choice
@@ -612,7 +614,45 @@ main_program() {
             echo
 			remove_all_containers
             ;;
+            
         25) 
+			echo -e "${CYAN}===== MODE ACCESSED: READ AND LIST ALL COMMANDS IN THE PROGRAM =====${NC}"
+			echo
+			echo -e "${WHITE}1. Show all Docker images${NC} - docker images" 
+			echo -e "${WHITE}2. Show running containers${NC} - docker ps "
+			echo -e "${WHITE}3. Show all containers (running + stopped)${NC} - docker ps -a"
+			separator
+			echo -e "${LIGHT_GREEN} === CONTAINER AND IMAGE OPERATIONS === ${nc}"
+			echo -e "${WHITE}4. Pull an image from: https://hub.docker.com/search?categories=Operating+Systems${NC} - docker pull "
+			echo -e "${WHITE}5. Run (Access) a container${NC} - docker run -dit <image_name>"
+			echo -e "${WHITE}6. Run (Access) a container with a specific hostname${NC} - docker run --hostname=<container_host_name> -dit <image_name>"
+			echo -e "${WHITE}7. Attach to a running container${NC} - docker attach <container_id>"
+			echo -e "${WHITE}8. Build Docker image from Dockerfile${NC} - docker build -t <image_name> -f Dockerfile"
+			echo -e "${WHITE}9. Build Docker image from child path Dockerfile${NC} - docker build -t <image_name> -f <dockerfile_path>/Dockerfile 'dockerfile_path'"
+			echo -e "${WHITE}10. Persist changes to container image${NC} - docker commit <container_id> <new_image_name>"
+			echo -e "${WHITE}11. Start a container${NC} - docker start <container_id>"
+			echo -e "${WHITE}12. Stop a container${NC} - docker stop <container_id>"
+			echo -e "${WHITE}13. Restart a container${NC} - docker restart <container_id>"
+			separator
+			echo -e "${LIGHT_GREEN} === LOGS OPTIONS === ${nc}"
+			echo -e "${WHITE}14. Show logs for a container${NC} - docker logs <container_id>"
+			echo -e "${WHITE}15. Show Docker system logs${NC} - journalctl -u docker --no-pager"
+			echo -e "${WHITE}16. Show detailed Docker info${NC} - docker info"
+			separator
+			echo -e "${LIGHT_GREEN} === DAEMONS OPERATIONS === ${nc}"
+			echo -e "${WHITE}17. Start Docker daemon${NC} - sudo systemctl start docker"
+			echo -e "${WHITE}18. Stop Docker daemon${NC} - sudo systemctl stop docker"
+			echo -e "${WHITE}19. Restart Docker daemon${NC} - sudo systemctl restart docker"
+			separator
+			echo -e "${LIGHT_GREEN} === REMOVAL OPERATIONS === ${nc}"
+			echo -e "${WHITE}20. Remove a container${NC} - docker rm '<container_id>' 2>&1 | tee /tmp/docker_rm_output.log"
+			echo -e "${WHITE}21. FORCE Remove a container${NC} - docker rm -f '<container_id>' 2>&1 | tee /tmp/docker_rm_output.log"
+			echo -e "${WHITE}22. Remove a DOCKER image${NC} - docker rmi '<image_id>' 2>&1 | tee /tmp/docker_rmi_output.log"
+			echo -e "${WHITE}23. FORCE Remove a DOCKER image${NC} - docker rmi -f '<image_id>'"
+			echo -e "${WHITE}24. Prune unused images & containers${NC} - docker system prune -a -f"
+			;;
+			
+        26) 
             echo -e "${GREEN}Exiting...${NC}"
             exit 0
             ;;
