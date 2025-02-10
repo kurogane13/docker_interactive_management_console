@@ -389,32 +389,34 @@ main_program() {
     echo -e "${WHITE}3. Show all containers (running + stopped)${NC}"
     separator
     echo -e "${LIGHT_GREEN} === CONTAINER AND IMAGE OPERATIONS === ${nc}"
-    echo -e "${WHITE}4. Run a container interactively (Persistent)${NC}"
-    echo -e "${WHITE}5. Attach to a running container${NC}"
-    echo -e "${WHITE}6. Build Docker image from Dockerfile${NC}"
-    echo -e "${WHITE}7. Build Docker image from child path Dockerfile${NC}"
-    echo -e "${WHITE}8. Persist changes to container image${NC}"
-    echo -e "${WHITE}9. Start a container${NC}"
-    echo -e "${WHITE}10. Stop a container${NC}"
-    echo -e "${WHITE}11. Restart a container${NC}"
+    echo -e "${WHITE}4. Pull an image from: https://hub.docker.com/search?categories=Operating+Systems${NC}"
+    echo -e "${WHITE}5. Run (Access) a container${NC}"
+    echo -e "${WHITE}6. Run (Access) a container with a specific hostname${NC}"
+    echo -e "${WHITE}7. Attach to a running container${NC}"
+    echo -e "${WHITE}8. Build Docker image from Dockerfile${NC}"
+    echo -e "${WHITE}9. Build Docker image from child path Dockerfile${NC}"
+    echo -e "${WHITE}10. Persist changes to container image${NC}"
+    echo -e "${WHITE}11. Start a container${NC}"
+    echo -e "${WHITE}12. Stop a container${NC}"
+    echo -e "${WHITE}13. Restart a container${NC}"
     separator
     echo -e "${LIGHT_GREEN} === LOGS OPTIONS === ${nc}"
-    echo -e "${WHITE}12. Show logs for a container${NC}"
-    echo -e "${WHITE}13. Show Docker system logs${NC}"
-    echo -e "${WHITE}14. Show detailed Docker info${NC}"
+    echo -e "${WHITE}14. Show logs for a container${NC}"
+    echo -e "${WHITE}15. Show Docker system logs${NC}"
+    echo -e "${WHITE}16. Show detailed Docker info${NC}"
     separator
     echo -e "${LIGHT_GREEN} === DAEMONS OPERATIONS === ${nc}"
-    echo -e "${WHITE}15. Start Docker daemon${NC}"
-    echo -e "${WHITE}16. Stop Docker daemon${NC}"
-    echo -e "${WHITE}17. Restart Docker daemon${NC}"
+    echo -e "${WHITE}17. Start Docker daemon${NC}"
+    echo -e "${WHITE}18. Stop Docker daemon${NC}"
+    echo -e "${WHITE}19. Restart Docker daemon${NC}"
     separator
     echo -e "${LIGHT_GREEN} === REMOVAL OPERATIONS === ${nc}"
-    echo -e "${WHITE}18. Remove a container${NC}"
-    echo -e "${WHITE}19. FORCE Remove a container${NC}"
-    echo -e "${WHITE}20. Remove a DOCKER image${NC}"
-    echo -e "${WHITE}21. FORCE Remove a DOCKER image${NC}"
-    echo -e "${WHITE}22. Prune unused images & containers${NC}"
-    echo -e "${WHITE}23. Exit${NC}\n"
+    echo -e "${WHITE}20. Remove a container${NC}"
+    echo -e "${WHITE}21. FORCE Remove a container${NC}"
+    echo -e "${WHITE}22. Remove a DOCKER image${NC}"
+    echo -e "${WHITE}23. FORCE Remove a DOCKER image${NC}"
+    echo -e "${WHITE}24. Prune unused images & containers${NC}"
+    echo -e "${WHITE}25. Exit${NC}\n"
 
 
     read -p "Select an option: " choice
@@ -437,8 +439,20 @@ main_program() {
             echo
             docker ps -a
             ;;
-        4) 
-            echo -e "${CYAN}===== MODE ACCESSED: RUN CONTAINER =====${NC}"
+            
+        4)  echo -e "${CYAN}===== MODE ACCESSED: PULL AN IMAGE =====${NC}"
+            echo
+            docker ps -a
+            echo
+            read -p "Enter a valid image name to pull from https://hub.docker.com/search?categories=Operating+Systems, and press enter (Example: amazonlinux:latest): " img
+            echo
+            echo -e "${GREEN}Attempting to pull image: $img ...${NC}"
+            echo -e "${WHITE} ${NC}"
+            docker pull $img
+            echo
+            ;;
+        5) 
+            echo -e "${CYAN}===== MODE ACCESSED: RUN (ACCESS) A CONTAINER =====${NC}"
             echo
             docker ps -a
             echo
@@ -448,8 +462,20 @@ main_program() {
             echo -e "${WHITE}Attaching to container $container_id... (Use Ctrl+P + Ctrl+Q to detach)${NC}"
             docker attach $container_id
             ;;
+            
+        6)    
+            echo -e "${CYAN}===== MODE ACCESSED: RUN (ACCESS) A CONTAINER WITH A SPECIFIC HOSTNAME =====${NC}"
+            echo
+            docker ps -a
+            echo
+            read -p "Enter a container image name to run: " img
+            echo
+            read -p "Enter a HOSTNAME for the container $img: " container_host_name
+            docker run --hostname=$container_host_name -dit $img
+            echo
+            ;;
 
-        5) 
+        7) 
             echo -e "${CYAN}===== MODE ACCESSED: ATTACH TO CONTAINER =====${NC}"
             echo
             docker ps -a
@@ -457,18 +483,18 @@ main_program() {
             read -p "Enter container ID/name: " cid
             docker attach $cid
             ;;
-        6) 
+        8) 
             echo -e "${CYAN}===== MODE ACCESSED: BUILD DOCKER IMAGE =====${NC}"
 			echo
 			build_docker_image
             ;;
         
-        7) 
+        9) 
 			echo -e "${CYAN}===== MODE ACCESSED: BUILD DOCKER IMAGE FROM CHILD PATH =====${NC}"
 			echo
 			build_docker_image_child_path
             ;;
-        8) 
+        10) 
             echo -e "${CYAN}===== MODE ACCESSED: PERSIST CHANGES TO CONTAINER IMAGE =====${NC}"
             echo
             docker ps -a
@@ -479,7 +505,7 @@ main_program() {
             echo
             docker commit $cid $new_img
             ;;
-        9) 
+        11) 
             echo -e "${CYAN}===== MODE ACCESSED: START CONTAINER =====${NC}"
             echo
             docker ps -a
@@ -489,8 +515,10 @@ main_program() {
             echo "Attempting to start container $cid..."
             echo
             docker start $cid
+            echo
+            docker ps -a
             ;;
-        10) 
+        12) 
             echo -e "${CYAN}===== MODE ACCESSED: STOP CONTAINER =====${NC}"
             echo
             docker ps -a
@@ -500,8 +528,10 @@ main_program() {
             echo "Attempting to stop container $cid..."
             echo
             docker stop $cid
+            echo
+            docker ps -a
             ;;
-        11) 
+        13) 
             echo -e "${CYAN}===== MODE ACCESSED: RESTART CONTAINER =====${NC}"
             echo
             docker ps -a
@@ -511,8 +541,10 @@ main_program() {
             echo "Attempting to restart container $cid..."
             echo
             docker restart $cid
+            echo
+            docker ps -a
             ;;
-        12) 
+        14) 
             echo -e "${CYAN}===== MODE ACCESSED: SHOW CONTAINER LOGS =====${NC}"
             echo
             docker ps -a
@@ -520,39 +552,39 @@ main_program() {
             read -p "Enter container ID/name: " cid
             docker logs $cid
             ;;
-        13) 
+        15) 
             echo -e "${CYAN}===== MODE ACCESSED: SHOW DOCKER SYSTEM LOGS =====${NC}"
             echo
             journalctl -u docker --no-pager
             ;;
-        14) 
+        16) 
             echo -e "${CYAN}===== MODE ACCESSED: SHOW DOCKER INFO =====${NC}"
             echo
             docker info
             ;;
-        15) 
+        17) 
             echo -e "${CYAN}===== MODE ACCESSED: START DOCKER DAEMON =====${NC}"
             echo
             sudo systemctl start docker
             ;;
-        16) 
+        18) 
             echo -e "${CYAN}===== MODE ACCESSED: STOP DOCKER DAEMON =====${NC}"
             echo
             sudo systemctl stop docker
             ;;
-        17) 
+        19) 
             echo -e "${CYAN}===== MODE ACCESSED: RESTART DOCKER DAEMON =====${NC}"
             echo
             sudo systemctl restart docker
             ;;
-        18) 
+        20) 
             echo -e "${CYAN}===== MODE ACCESSED: REMOVE CONTAINER =====${NC}"
             echo
             docker ps -a
             echo
 			remove_container
             ;;   
-        19) 
+        21) 
             echo -e "${CYAN}===== MODE ACCESSED: FORCE REMOVE A CONTAINER =====${NC}"
             echo
             docker ps -a
@@ -560,7 +592,7 @@ main_program() {
             force_remove_container
             ;;
             
-        20) 
+        22) 
             echo -e "${CYAN}===== MODE ACCESSED: REMOVE DOCKER IMAGE =====${NC}"
             echo
             docker images
@@ -568,19 +600,19 @@ main_program() {
             remove_image
 			
             ;;   
-        21) 
+        23) 
             echo -e "${CYAN}===== MODE ACCESSED: FORCE REMOVE DOCKER IMAGE =====${NC}"
             echo
             docker images
             echo
             force_remove_image
             ;;
-        22) 
+        24) 
             echo -e "${CYAN}===== MODE ACCESSED: PRUNE UNUSED IMAGES & CONTAINERS =====${NC}"
             echo
 			remove_all_containers
             ;;
-        23) 
+        25) 
             echo -e "${GREEN}Exiting...${NC}"
             exit 0
             ;;
